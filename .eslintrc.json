@@ -5,7 +5,7 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "google"
+        "airbnb"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -22,5 +22,14 @@
         "react"
     ],
     "rules": {
+    "no-unused-vars" : "off",
+    "camelcase" : "off",
+    "react/jsx-filename-extension" : "off",
+    "no-lone-blocks" : "off",
+    "linebreak-style" : "off",
+    "react/no-unused-state" : "off",
+    "object-curly-spacing" : "off",
+    "import/extensions" : "off",
+    "indent" : "off"
     }
 }

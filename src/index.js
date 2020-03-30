@@ -7,7 +7,7 @@ ReactDOM.render(React.createElement(
   'h1',
   null,
   ' Hello world! '
-), document.getElementById("root"));
+), document.getElementById('root'));
 
 function App() {
   return React.createElement(
@@ -15,7 +15,7 @@ function App() {
     { variant: 'contained', color: 'primary' },
     'Hello World'
   );
-};
+}
 
 ReactDOM.render(React.createElement(App, null), document.querySelector('#root'));
 ReactDOM.render(React.createElement(CustomGrid, null), document.querySelector('#root'));
