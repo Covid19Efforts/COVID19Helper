@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
 import CustomGrid from './CustomGrid.js';
@@ -10,12 +10,7 @@ ReactDOM.render(React.createElement(
 ), document.getElementById('root'));
 
 function App() {
-  return React.createElement(
-    Button,
-    { variant: 'contained', color: 'primary' },
-    'Hello World'
-  );
+  return React.createElement(CustomGrid, { language: 'lang_en_us' });
 }
 
 ReactDOM.render(React.createElement(App, null), document.querySelector('#root'));
-ReactDOM.render(React.createElement(CustomGrid, null), document.querySelector('#root'));

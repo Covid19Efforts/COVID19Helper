@@ -18,8 +18,14 @@ import LocalizedStrings from 'react-localization';
 import { data } from './localizedStrings.js';
 import image_find from './assets/find.png';
 import image_medicine from './assets/medicine.png';
+import image_cooked_food from './assets/cookedFood.png';
+import image_grocery from './assets/grocery.png';
 
 var strings = new LocalizedStrings(data);
+
+function getAvatarSizeWrtSpacing() {
+  return 13;
+}
 
 var styles = function styles(theme) {
   return {
@@ -31,11 +37,15 @@ var styles = function styles(theme) {
       textAlign: 'center',
       color: theme.palette.text.secondary
     },
-    cardAvatar: {
+    cardAvatar1: {
       display: 'flex',
       '& > *': {
         margin: theme.spacing(1)
       }
+    },
+    cardAvatar2: {
+      width: theme.spacing(getAvatarSizeWrtSpacing()),
+      height: theme.spacing(getAvatarSizeWrtSpacing())
     }
   };
 };
@@ -83,8 +93,15 @@ var CustomGrid = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (CustomGrid.__proto__ || Object.getPrototypeOf(CustomGrid)).call(this, props));
 
+    var language = props.language;
+
+
+    if (typeof language === 'undefined') {
+      language = 'lang_en_us';
+    }
+
     _this.props = props;
-    _this.state = { page_type: PAGE_TYPES.PAGE_HOME, language: 'lang_en_us', items: [] };
+    _this.state = { page_type: PAGE_TYPES.PAGE_HOME, language: language, items: [] };
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     strings.setLanguage(_this.state.language);
@@ -92,6 +109,16 @@ var CustomGrid = function (_React$Component) {
   }
 
   _createClass(CustomGrid, [{
+    key: 'new_find_card',
+    value: function new_find_card(id, type, image, text) {
+      return {
+        id: id,
+        type: type,
+        image: image,
+        text: text
+      };
+    }
+  }, {
     key: 'render_home_page',
     value: function render_home_page() {
       {// clear any existing state. The home page structure is fixed
@@ -99,12 +126,16 @@ var CustomGrid = function (_React$Component) {
       this.state.items = [];
 
       var idCtr = 0;
-      this.state.items = this.state.items.concat({
-        id: idCtr,
-        type: CARD_TYPES.CARD_FIND_GENERAL,
-        image: image_find,
-        text: strings.IDS_FIND
-      });
+      this.state.items = this.state.items.concat(this.new_find_card(idCtr, CARD_TYPES.CARD_FIND_GENERAL, image_find, strings.IDS_FIND_ALL));
+
+      idCtr++;
+      this.state.items = this.state.items.concat(this.new_find_card(idCtr, CARD_TYPES.CARD_FIND_MEDICINE, image_medicine, strings.IDS_FIND_MEDICINES));
+
+      idCtr++;
+      this.state.items = this.state.items.concat(this.new_find_card(idCtr, CARD_TYPES.CARD_FIND_FOOD, image_cooked_food, strings.IDS_FIND_FOOD));
+
+      idCtr++;
+      this.state.items = this.state.items.concat(this.new_find_card(idCtr, CARD_TYPES.CARD_FIND_GROCERIES, image_grocery, strings.IDS_FIND_GROCERIES));
 
       var classes = this.props.classes;
 
@@ -113,9 +144,7 @@ var CustomGrid = function (_React$Component) {
         Grid,
         { container: true, spacing: 2 },
         this.state.items.map(function (item) {
-          console.log('here1', item, item.type);
           if (item.type > CARD_TYPES.CARD_FIND_START && item.type < CARD_TYPES.CARD_FIND_END) {
-
             return React.createElement(
               Grid,
               { item: true, sm: 12, key: item.id },
@@ -123,7 +152,8 @@ var CustomGrid = function (_React$Component) {
                 Card,
                 { className: classes.card, key: item.id },
                 React.createElement(CardHeader, {
-                  avatar: React.createElement(Avatar, { src: item.image, 'aria-label': item.text }),
+                  titleTypographyProps: { variant: 'h1', align: 'left' },
+                  avatar: React.createElement(Avatar, { className: classes.cardAvatar2, src: item.image, 'aria-label': item.text }),
 
                   title: item.text
                 })

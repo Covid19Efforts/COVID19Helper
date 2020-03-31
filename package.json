@@ -36,8 +36,10 @@
   "dependencies": {
     "@material-ui/core": "^4.9.8",
     "react": "^16.13.1",
+    "react-device-detect": "^1.11.14",
     "react-dom": "^16.13.1",
     "react-localization": "^1.0.15",
+    "ua-parser-js": "^0.7.21",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   }
