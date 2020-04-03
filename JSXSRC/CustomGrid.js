@@ -147,7 +147,6 @@ class CustomGrid extends React.Component {
       {
             this.state.locationPromptCounter = 0; //keep asking till user says yes. Here user has not declined from browser, so we still have hope of getting geolocation
             this.state.lastButtonPress = null;
-            this.setState({page_type:PAGE_TYPES.PAGE_SEARCH_RESULTS});
             this.showLocationErrorSnackBar();
       }
       else
@@ -171,7 +170,7 @@ class CustomGrid extends React.Component {
       {
         let lastPage = this.state.lastButtonPress;
         this.state.lastButtonPress = null;
-        this.state.page_type =
+        this.setState({page_type:PAGE_TYPES.PAGE_SEARCH_RESULTS});
       }
   },
   (err) =>
@@ -260,27 +259,40 @@ class CustomGrid extends React.Component {
 
 
       <Grid container spacing={2}>
-        {this.state.items.map((item) => {
-          if ((item.type > CARD_TYPES.CARD_FIND_START)
-            && (item.type < CARD_TYPES.CARD_FIND_END)) {
-            return (
-              <Grid item sm={12} key={item.id}>
-                <Card className={classes.card} key={item.id}>
-                <CardActionArea onClick={(e) => this.CheckLocationOnFind(e, item.id)}>
-                  <CardHeader
-                    titleTypographyProps={{variant: 'h1', align: 'left'}}
-                    avatar={
-                      <Avatar className={classes.cardAvatar2} src={item.image} aria-label={item.text} />
-                    }
-
-                    title={item.text}
-                  />
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            );
-          }
-        })}
+        {this.state.items.map
+          ((item) => 
+            {
+            
+                return (
+                  <Grid item sm={12} key={item.id}>
+                  { (() =>
+                    {
+                      if ((item.type > CARD_TYPES.CARD_FIND_START)
+                      && (item.type < CARD_TYPES.CARD_FIND_END))
+                      {
+                        return (
+                          <Card className={classes.card} key={item.id}>
+                          <CardActionArea onClick={(e) => this.CheckLocationOnFind(e, item.id)}>
+                          <CardHeader
+                          titleTypographyProps={{variant: 'h1', align: 'left'}}
+                          avatar={
+                            <Avatar className={classes.cardAvatar2} src={item.image} aria-label={item.text} />
+                          }
+                        
+                          title={item.text}
+                          />
+                          </CardActionArea>
+                          </Card>
+                        );
+                      }
+                  }
+                )()
+                }
+                  </Grid>
+                );
+            }
+          )
+        }
       </Grid>
       </Fragment>
     );
