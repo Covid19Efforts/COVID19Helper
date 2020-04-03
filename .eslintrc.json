@@ -35,6 +35,11 @@
     "class-methods-use-this" : "off",
     "no-plusplus" : "off",
     "react/destructuring-assignment": "off",
-    "max-len" : "off"
+    "max-len" : "off",
+    "array-callback-return" : "off",
+    "no-unreachable" :  "off",
+    "react/sort-comp" : "off",
+    "no-console" : "off",
+    "react/jsx-indent" : "off"
     }
 }

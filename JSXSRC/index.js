@@ -2,16 +2,25 @@ import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
 import CustomGrid from './CustomGrid.js';
+import TopBar from './topbar.js';
 
-ReactDOM.render(
-  <h1> Hello world! </h1>,
-  document.getElementById('root'),
-);
+class App extends React.Component
+{
+  constructor(props)
+  {
+      super(props);
+      this.geoLocation = {permissionDenied:false};
+  }
 
-function App() {
+  render()
+  {
   return (
-    <CustomGrid language="lang_en_us" />
+    <Fragment>
+      <TopBar />
+      <CustomGrid language="lang_en_us" />
+    </Fragment>
   );
 }
+};
 
 ReactDOM.render(<App />, document.querySelector('#root'));

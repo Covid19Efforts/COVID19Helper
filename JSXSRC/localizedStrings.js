@@ -5,6 +5,11 @@ const data = {
     IDS_FIND_MEDICINES: 'FIND MEDICINES',
     IDS_FIND_FOOD: 'FIND COOKED FOOD',
     IDS_FIND_GROCERIES: 'FIND GROCERIES',
+    IDS_LOCATION_PROMPT_TITLE : "Allow access to loction?",
+    IDS_LOCATION_PROMPT_MESSAGE : "This website will use location to show results from your area.",
+    IDS_LOCATION_PROMPT_AGREE : "Agree",
+    IDS_LOCATION_PROMPT_DISAGREE : "Disagree",
+    IDS_LOCATION_PERMISSION_ERROR : "Need location to proceed",
   },
   lang_hindi:
   {
