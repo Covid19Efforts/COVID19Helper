@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {IconButton, Button, Typography, Toolbar, AppBar} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import {data} from './localizedStrings.js';
+import LocalizedStrings from 'react-localization';
 
 const strings = new LocalizedStrings(data);
 
@@ -23,6 +24,8 @@ class TopBar extends React.Component {
 
   render() {
     const { classes } = this.props;
+    strings.setLanguage('lang_marathi');
+    
     return (
         <AppBar position="static">
           <Toolbar>

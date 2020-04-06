@@ -18,7 +18,8 @@ var DataBase = function () {
             var callback = arguments[3];
 
             var url = "https://c6uyraja33.execute-api.ap-south-1.amazonaws.com/prod?";
-            var fetchUrl = url + "myLat=" + latitude + "&myLong=" + longitude + "&myRadiusInMeter=" + radiusMetres;
+            var fetchUrl = "https://c6uyraja33.execute-api.ap-south-1.amazonaws.com/prod?myLat=73.9347549&myLong=18.5183906&myRadiusInMeter=100000";
+            //const fetchUrl = url + "myLat=" + latitude + "&myLong=" + longitude + "&myRadiusInMeter=" + radiusMetres;
             fetch(fetchUrl).then(function (response) {
                 return response.json();
             }).then(function (jsonData) {

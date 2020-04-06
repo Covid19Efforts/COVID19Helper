@@ -22,11 +22,13 @@ import ExpansioPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansioPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandModreIcon from '@material-ui/icons/ExpandMore';
 import LaunchIcon from '@material-ui/icons/Launch';
+import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Slider from '@material-ui/core/Slider';
 
 import DataBase from './DataBase.js'
 import Util from './Util.js'
@@ -137,7 +139,7 @@ class CustomGrid extends React.Component {
     if (typeof language === 'undefined') {
       language = 'lang_en_us';
     }
-
+    language = 'lang_marathi';
     this.props = props;
     this.state = { page_type: PAGE_TYPES.PAGE_HOME,
       searchResults : null,
@@ -278,7 +280,15 @@ class CustomGrid extends React.Component {
           item.type = this.DBTypeToJSType(result.type);
           item.id   = item.type;
           item.name = result.name.S;
-          item.coords = JSON.parse(result.geoJson.S).coordinates;
+          
+          try{
+            item.coords = JSON.parse(result.geoJson.S).coordinates;
+          }
+          catch(e)
+          {
+            console.error("json parse error",result,result.geoJson);
+          }
+
           items[item.type].children.push(item);
         }
 
@@ -294,6 +304,11 @@ class CustomGrid extends React.Component {
     {
       this.state.items = this.state.items.concat({type:CARD_TYPES.CARD_FIND_RESULT_OTHER, id:CARD_TYPES.CARD_FIND_RESULT_OTHER});
     }
+  }
+
+  RangeSliderCallback(e, value)
+  {
+    console.log(e, value);
   }
 
   render_home_page() {
@@ -326,6 +341,7 @@ class CustomGrid extends React.Component {
 
 
     const { classes } = this.props;
+    let itemCtr = 0;
 
     return (
       <Fragment>
@@ -390,8 +406,34 @@ class CustomGrid extends React.Component {
                           {
                            if(item.children.length > 0)
                            {
-                              return(
+                            itemCtr = itemCtr + 1;
+                             let filterControl;
+                             if(itemCtr == 1)
+                             {
+                                filterControl = (
                                 <Grid item sm={12} key={item.id}>
+                                <ExpansioPanel defaultExpanded>
+                                <ExpansioPanelSummary
+                                        expandIcon={<ExpandModreIcon/>}
+                                        id={item.id}
+                                      >
+                                  <Avatar className={classes.cardAvatar3} aria-label={item.text} >
+                                    <FilterListRoundedIcon />
+                                  </Avatar>
+                                  <Typography variant="h5">
+                                    {strings.IDS_FILTER}
+                                  </Typography>
+                                </ExpansioPanelSummary>
+                                <ExpansioPanelDetails>
+                                  <Slider defaultValue={50} step={10} min={10} max={100} valueLabelDisplay="on" onChangeCommitted={this.RangeSliderCallback.bind(this)} marks={[{value:10,label:'10 km'}, {value:100,label:'100 km'}]} />
+                                </ExpansioPanelDetails>
+                                </ExpansioPanel>
+                                </Grid> );
+                             }
+                              return(
+                                <Fragment key={item.id}>
+                                {filterControl}
+                                <Grid item sm={12}>
                                 <ExpansioPanel defaultExpanded>
                                 <ExpansioPanelSummary
                                         expandIcon={<ExpandModreIcon/>}
@@ -403,27 +445,26 @@ class CustomGrid extends React.Component {
                                   </Typography>
                                 </ExpansioPanelSummary>
                                 <ExpansioPanelDetails>
+                                <List component="nav" style={{flex:1}}>
                                         {
                                           item.children.map(
                                             (child) => {
                                               return (
-                                                <Fragment key={child.id}>
-                                                  <List component="nav">
-                                                    <ListItem button>
+                                                    <ListItem button key={child.name}>
                                                       <ListItemIcon>
                                                         <LaunchIcon />
                                                       </ListItemIcon>
                                                       <ListItemText primary={child.name} secondary={Util.GetGeoDistance(child.coords, [this.state.geoLocation.coords.latitude, this.state.geoLocation.coords.longitude]).toFixed(1) + " " + strings.IDS_KM}/>
                                                     </ListItem>
-                                                  </List>
-                                                </Fragment>
                                               );
                                             }
                                           )
                                         }
+                                  </List>
                                   </ExpansioPanelDetails>
                               </ExpansioPanel>
                               </Grid>
+                              </Fragment>
                               );
                             }
                           }

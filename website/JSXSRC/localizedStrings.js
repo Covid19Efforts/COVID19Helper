@@ -16,7 +16,8 @@ const data = {
     IDS_OTHERS    : "Others",
     IDS_MAP       : "Map",
     IDS_KM        : "km",
-    IDS_HELP_NEARBY : "COVID19 Help is around you ..."
+    IDS_HELP_NEARBY : "COVID19 Help is around you ...",
+    IDS_FILTER      : "Filter"
   },
   lang_hindi:
   {
@@ -24,6 +25,20 @@ const data = {
     IDS_FIND_MEDICINES: 'दवाइयाँ खोजें',
     IDS_FIND_FOOD: 'पका हुआ भोजन ढूंढें',
     IDS_FIND_GROCERIES: 'किराने का सामान ढूंढें',
+
+    IDS_LOCATION_PROMPT_TITLE : "Allow access to loction?",
+    IDS_LOCATION_PROMPT_MESSAGE : "This website will use location to show results from your area.",
+    IDS_LOCATION_PROMPT_AGREE : "Agree",
+    IDS_LOCATION_PROMPT_DISAGREE : "Disagree",
+    IDS_LOCATION_PERMISSION_ERROR : "Need location to proceed",
+    IDS_FOOD : "Food",
+    IDS_MEDICINE : "Medicine",
+    IDS_GROCERIES : "Groceries",
+    IDS_OTHERS    : "Others",
+    IDS_MAP       : "Map",
+    IDS_KM        : "km",
+    IDS_HELP_NEARBY : "COVID19 Help is around you ...",
+    IDS_FILTER      : "Filter"
   },
   lang_marathi:
   {
@@ -31,6 +46,20 @@ const data = {
     IDS_FIND_MEDICINES: 'औषधे शोधा',
     IDS_FIND_FOOD: 'शिजवलेले अन्न शोधा',
     IDS_FIND_GROCERIES: 'किराणा सामान शोध',
+
+    IDS_LOCATION_PROMPT_TITLE : "लोकेशनमध्ये प्रवेश करण्यास परवानगी द्या?",
+    IDS_LOCATION_PROMPT_MESSAGE : "आपल्या वेबसाइटवरील परिणाम दर्शविण्यासाठी ही वेबसाइट स्थानाचा वापर करेल.",
+    IDS_LOCATION_PROMPT_AGREE : "सहमत",
+    IDS_LOCATION_PROMPT_DISAGREE : "असहमत",
+    IDS_LOCATION_PERMISSION_ERROR : "पुढे जाण्यासाठी स्थान आवश्यक आहे",
+    IDS_FOOD : "जेवण",
+    IDS_MEDICINE : "औषध",
+    IDS_GROCERIES : "किराणा",
+    IDS_OTHERS    : "इतर",
+    IDS_MAP       : "नकाशा",
+    IDS_KM        : "किमी",
+    IDS_HELP_NEARBY : "कोविड 19 मदत आपल्या जवळ आहे ...",
+    IDS_FILTER      : "फिल्टर करा"
   },
 };
 

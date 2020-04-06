@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { IconButton, Button, Typography, Toolbar, AppBar } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { data } from './localizedStrings.js';
+import LocalizedStrings from 'react-localization';
 
 var strings = new LocalizedStrings(data);
 
@@ -38,6 +39,8 @@ var TopBar = function (_React$Component) {
     key: 'render',
     value: function render() {
       var classes = this.props.classes;
+
+      strings.setLanguage('lang_marathi');
 
       return React.createElement(
         AppBar,

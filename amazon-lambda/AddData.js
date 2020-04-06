@@ -70,7 +70,7 @@ exports.handler = function(event, ctx, callback)
             PutItemInput : 
             {
                 Item : {
-                    "name" : event.name ? { S: event.name } : {S: 'LensKart'},
+                    "name" : event.name ? { S: event.name } : {S: 'Bhel'},
                     "type" : {S: "food"},
                     "alternatenames" : event.alternatenames ? { S: event.alternatenames } : {S: ','},
                     "phonenumbers" : event.phonenumbers ? { S: event.phonenumbers } : {S:'9650277790'},
@@ -87,7 +87,7 @@ exports.handler = function(event, ctx, callback)
         }
     ).promise()
     .then(function(){
-        console.log('lenskart added');
+        console.log('Bhel added');
         
         DDBGeoTableManager.putPoint
     (
@@ -123,8 +123,42 @@ exports.handler = function(event, ctx, callback)
     ).promise()
     .then(function(){
         console.log('Nazar Added');
-        console.log('Done');
-        callback(null, "done");
+        DDBGeoTableManager.putPoint
+        (
+            {   
+                RangeKeyValue:{
+                    S: uuids.v4()
+                },
+    
+                GeoPoint: 
+                {
+                    latitude : 73.9347549,
+                    longitude : 18.5183906
+                },
+                
+                PutItemInput : 
+                {
+                    Item : {
+                        "name" : event.name ? { S: event.name } : {S: 'Samruddhi Restaurant'},
+                        "type" : {S: "medicine"},
+                        "alternatenames" : event.alternatenames ? { S: event.alternatenames } : {S: ','},
+                        "phonenumbers" : event.phonenumbers ? { S: event.phonenumbers } : {S:'9650277790'},
+                        "address_line1" : event.address_line1 ? { S: event.address_line1 } : {S: 'a-3/268'},
+                        "address_line2" : event.address_line2 ? { S: event.address_line2 } : {S: 'paschim vihar'},
+                        "address_city" : event.address_city ? { S: event.address_city } :{S: 'Delhi'},
+                        "address_state" : event.address_state ? { S: event.address_state } : {S : "Delhi"},
+                        "address_country" : event.address_country ? { S: event.address_country } :{S : "India"},
+                        "address_zip" : event.address_zip ? { S: event.address_zip } : {S : "110063"},
+                        "timings" : event.timings ? { S: event.timings } : {S : 'monday,0930-1330,15:30-22:00'}
+                    },
+                }
+    
+            }
+        ).promise()
+        .then(function(){
+            console.log('Done');
+            callback(null, "done");
+        });
     })
     })
         

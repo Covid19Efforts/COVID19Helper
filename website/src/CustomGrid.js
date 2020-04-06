@@ -30,11 +30,13 @@ import ExpansioPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansioPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandModreIcon from '@material-ui/icons/ExpandMore';
 import LaunchIcon from '@material-ui/icons/Launch';
+import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Slider from '@material-ui/core/Slider';
 
 import DataBase from './DataBase.js';
 import Util from './Util.js';
@@ -149,7 +151,7 @@ var CustomGrid = function (_React$Component) {
     if (typeof language === 'undefined') {
       language = 'lang_en_us';
     }
-
+    language = 'lang_marathi';
     _this.props = props;
     _this.state = { page_type: PAGE_TYPES.PAGE_HOME,
       searchResults: null,
@@ -279,7 +281,13 @@ var CustomGrid = function (_React$Component) {
           item.type = _this3.DBTypeToJSType(result.type);
           item.id = item.type;
           item.name = result.name.S;
-          item.coords = JSON.parse(result.geoJson.S).coordinates;
+
+          try {
+            item.coords = JSON.parse(result.geoJson.S).coordinates;
+          } catch (e) {
+            console.error("json parse error", result, result.geoJson);
+          }
+
           items[item.type].children.push(item);
         });
 
@@ -291,6 +299,11 @@ var CustomGrid = function (_React$Component) {
       } else {
         this.state.items = this.state.items.concat({ type: CARD_TYPES.CARD_FIND_RESULT_OTHER, id: CARD_TYPES.CARD_FIND_RESULT_OTHER });
       }
+    }
+  }, {
+    key: 'RangeSliderCallback',
+    value: function RangeSliderCallback(e, value) {
+      console.log(e, value);
     }
   }, {
     key: 'render_home_page',
@@ -315,6 +328,7 @@ var CustomGrid = function (_React$Component) {
 
       var classes = this.props.classes;
 
+      var itemCtr = 0;
 
       return React.createElement(
         Fragment,
@@ -395,48 +409,83 @@ var CustomGrid = function (_React$Component) {
               } else if (item.type > CARD_TYPES.CARD_FIND_RESULT_START && item.type < CARD_TYPES.CARD_FIND_RESULT_END) {
                 if (_this4.state.searchResults) {
                   if (item.children.length > 0) {
-                    return React.createElement(
-                      Grid,
-                      { item: true, sm: 12, key: item.id },
-                      React.createElement(
-                        ExpansioPanel,
-                        { defaultExpanded: true },
+                    itemCtr = itemCtr + 1;
+                    var filterControl = void 0;
+                    if (itemCtr == 1) {
+                      filterControl = React.createElement(
+                        Grid,
+                        { item: true, sm: 12, key: item.id },
                         React.createElement(
-                          ExpansioPanelSummary,
-                          {
-                            expandIcon: React.createElement(ExpandModreIcon, null),
-                            id: item.id
-                          },
-                          React.createElement(Avatar, { className: classes.cardAvatar3, src: item.image, 'aria-label': item.text }),
+                          ExpansioPanel,
+                          { defaultExpanded: true },
                           React.createElement(
-                            Typography,
-                            { variant: 'h5' },
-                            item.text
+                            ExpansioPanelSummary,
+                            {
+                              expandIcon: React.createElement(ExpandModreIcon, null),
+                              id: item.id
+                            },
+                            React.createElement(
+                              Avatar,
+                              { className: classes.cardAvatar3, 'aria-label': item.text },
+                              React.createElement(FilterListRoundedIcon, null)
+                            ),
+                            React.createElement(
+                              Typography,
+                              { variant: 'h5' },
+                              strings.IDS_FILTER
+                            )
+                          ),
+                          React.createElement(
+                            ExpansioPanelDetails,
+                            null,
+                            React.createElement(Slider, { defaultValue: 50, step: 10, min: 10, max: 100, valueLabelDisplay: 'on', onChangeCommitted: _this4.RangeSliderCallback.bind(_this4), marks: [{ value: 10, label: '10 km' }, { value: 100, label: '100 km' }] })
                           )
-                        ),
+                        )
+                      );
+                    }
+                    return React.createElement(
+                      Fragment,
+                      { key: item.id },
+                      filterControl,
+                      React.createElement(
+                        Grid,
+                        { item: true, sm: 12 },
                         React.createElement(
-                          ExpansioPanelDetails,
-                          null,
-                          item.children.map(function (child) {
-                            return React.createElement(
-                              Fragment,
-                              { key: child.id },
-                              React.createElement(
-                                List,
-                                { component: 'nav' },
-                                React.createElement(
+                          ExpansioPanel,
+                          { defaultExpanded: true },
+                          React.createElement(
+                            ExpansioPanelSummary,
+                            {
+                              expandIcon: React.createElement(ExpandModreIcon, null),
+                              id: item.id
+                            },
+                            React.createElement(Avatar, { className: classes.cardAvatar3, src: item.image, 'aria-label': item.text }),
+                            React.createElement(
+                              Typography,
+                              { variant: 'h5' },
+                              item.text
+                            )
+                          ),
+                          React.createElement(
+                            ExpansioPanelDetails,
+                            null,
+                            React.createElement(
+                              List,
+                              { component: 'nav', style: { flex: 1 } },
+                              item.children.map(function (child) {
+                                return React.createElement(
                                   ListItem,
-                                  { button: true },
+                                  { button: true, key: child.name },
                                   React.createElement(
                                     ListItemIcon,
                                     null,
                                     React.createElement(LaunchIcon, null)
                                   ),
                                   React.createElement(ListItemText, { primary: child.name, secondary: Util.GetGeoDistance(child.coords, [_this4.state.geoLocation.coords.latitude, _this4.state.geoLocation.coords.longitude]).toFixed(1) + " " + strings.IDS_KM })
-                                )
-                              )
-                            );
-                          })
+                                );
+                              })
+                            )
+                          )
                         )
                       )
                     );
