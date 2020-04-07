@@ -8,10 +8,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { IconButton, Button, Typography, Toolbar, AppBar } from '@material-ui/core';
+import { IconButton, Button, Typography, Toolbar, AppBar, Select, MenuItem, InputLabel, Icon } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { data } from './localizedStrings.js';
 import LocalizedStrings from 'react-localization';
+import FormControl from '@material-ui/core/FormControl';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 var strings = new LocalizedStrings(data);
 
@@ -20,11 +22,28 @@ var styles = function styles(theme) {
     menuButton: {
       marginRight: theme.spacing(2)
     },
+    languageSelect: {
+      marginRight: theme.spacing(2),
+      '&:hover': {
+        backgroundColor: 'rgba(0,0,0,0.08)'
+      }
+    },
+    languageSelectInput: {
+      color: '#ffffff'
+    },
     title: {
       flexGrow: 1
     }
   };
 };
+
+function WhiteDropDownIcon() {
+  return React.createElement(
+    Icon,
+    { style: { color: "#ffffff" } },
+    React.createElement(ExpandMoreIcon, null)
+  );
+}
 
 var TopBar = function (_React$Component) {
   _inherits(TopBar, _React$Component);
@@ -59,9 +78,27 @@ var TopBar = function (_React$Component) {
             strings.IDS_HELP_NEARBY
           ),
           React.createElement(
-            Button,
-            { color: 'inherit' },
-            'Login'
+            FormControl,
+            { className: classes.languageSelect },
+            React.createElement(
+              Select,
+              { value: 'english', IconComponent: WhiteDropDownIcon, disableUnderline: true, inputProps: { className: classes.languageSelectInput } },
+              React.createElement(
+                MenuItem,
+                { value: 'english' },
+                'English'
+              ),
+              React.createElement(
+                MenuItem,
+                { value: 'marathi' },
+                'Marathi'
+              ),
+              React.createElement(
+                MenuItem,
+                { value: 'hindi' },
+                'Hindi'
+              )
+            )
           )
         )
       );
