@@ -10,14 +10,22 @@ class App extends React.Component
   {
       super(props);
       this.geoLocation = {permissionDenied:false};
+      this.state = {language:'lang_en_us'};
+      this.childCustomGrid1 = React.createRef();
+  }
+
+  SetLanguage(newLanguage)
+  {
+    console.log("SetLanguage", newLanguage);
+    this.childCustomGrid1.current.OnLanguageChange();
   }
 
   render()
   {
   return (
     <Fragment>
-      <TopBar />
-      <CustomGrid language="lang_en_us" />
+      <TopBar SetLaguageFunction={this.SetLanguage.bind(this)} />
+      <CustomGrid ref={this.childCustomGrid1} language={this.state.language} />
     </Fragment>
   );
 }

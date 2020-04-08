@@ -135,11 +135,12 @@ class CustomGrid extends React.Component {
   constructor(props) {
     super(props);
     let {language} = props;
+    let lang = language;
 
     if (typeof language === 'undefined') {
-      language = 'lang_en_us';
+      language = 'lang_marathi';
     }
-    language = 'lang_marathi';
+    
     this.props = props;
     this.state = { page_type: PAGE_TYPES.PAGE_HOME,
       searchResults : null,
@@ -152,14 +153,37 @@ class CustomGrid extends React.Component {
       snackbarOpen : false,
       snackbarSeverity:"info",
       snackbarText : " ",
-      language, items: []
+      language:lang, items: []
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    strings.setLanguage(this.state.language);
+    this.SetLanguage(language, false);
   }
 
+  SetLanguage(newLang, bDoSetState = true)
+  {
+    if(bDoSetState)
+    {
+      this.setState({language:newLang});
+    }
+    else
+    {
+      this.state.language = newLang;
+    }
+    strings.setLanguage(newLang);
+  }
+
+  OnLanguageChange()
+  {
+    const langKey = 'config_user_langauge';
+    let lang = window.localStorage.getItem(langKey);
+    if(lang)
+    {
+      console.log("customgrid lang change", lang);
+      this.SetLanguage(lang);
+    }
+  }
 
   new_find_card(id, type, image, text) {
     return (

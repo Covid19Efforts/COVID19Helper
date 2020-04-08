@@ -39,7 +39,49 @@ function WhiteDropDownIcon()
 class TopBar extends React.Component {
   constructor(props) {
     super(props);
-  
+    this.ParentSetLanguageFunction = props.SetLaguageFunction;
+    this.state = {
+      language:'lang_marathi',
+    };
+
+    const langKey = 'config_user_langauge';
+    let lang = window.localStorage.getItem(langKey);
+    if( lang == null )
+    {
+      switch(navigator.language)
+      {
+        // case 'en-US':
+        // case 'en':
+        //   lang = 'lang_en_us';
+        //   break;
+        case 'hi-IN':
+        case 'hi':
+          lang = 'lang_hindi';
+          break;
+        case 'mr-IN':
+        case 'mr':
+          lang = 'lang_marathi';
+          break;
+        default:
+          lang = 'lang_marathi';
+          break;
+      }
+    }
+    window.localStorage.setItem(langKey, lang);
+    this.setState.language = lang;
+  }
+
+  HandleChange(event)
+  {
+      let newLang = event.target.value;
+      console.log("handle change1", newLang, event);
+      console.log("handle change2", this.state);
+      if(newLang)
+      {
+        this.setState({language:newLang});
+        this.ParentSetLanguageFunction(newLang);
+      }
+      console.log("handle change3", this.state);
   }
 
   render() {
@@ -56,7 +98,9 @@ class TopBar extends React.Component {
               {strings.IDS_HELP_NEARBY}
             </Typography>
             <FormControl className={classes.languageSelect} >
-              <Select value="english" IconComponent={WhiteDropDownIcon } disableUnderline inputProps={{className:classes.languageSelectInput}}>
+              <Select value="english" 
+              onChange={this.HandleChange.bind(this)}
+              IconComponent={WhiteDropDownIcon } disableUnderline inputProps={{className:classes.languageSelectInput}}>
                 <MenuItem value="english">English</MenuItem>
                 <MenuItem value="marathi">Marathi</MenuItem>
                 <MenuItem value="hindi">Hindi</MenuItem>

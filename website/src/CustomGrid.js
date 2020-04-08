@@ -147,11 +147,12 @@ var CustomGrid = function (_React$Component) {
 
     var language = props.language;
 
+    var lang = language;
 
     if (typeof language === 'undefined') {
-      language = 'lang_en_us';
+      language = 'lang_marathi';
     }
-    language = 'lang_marathi';
+
     _this.props = props;
     _this.state = { page_type: PAGE_TYPES.PAGE_HOME,
       searchResults: null,
@@ -164,16 +165,38 @@ var CustomGrid = function (_React$Component) {
       snackbarOpen: false,
       snackbarSeverity: "info",
       snackbarText: " ",
-      language: language, items: []
+      language: lang, items: []
     };
 
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
-    strings.setLanguage(_this.state.language);
+    _this.SetLanguage(language, false);
     return _this;
   }
 
   _createClass(CustomGrid, [{
+    key: 'SetLanguage',
+    value: function SetLanguage(newLang) {
+      var bDoSetState = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+      if (bDoSetState) {
+        this.setState({ language: newLang });
+      } else {
+        this.state.language = newLang;
+      }
+      strings.setLanguage(newLang);
+    }
+  }, {
+    key: 'OnLanguageChange',
+    value: function OnLanguageChange() {
+      var langKey = 'config_user_langauge';
+      var lang = window.localStorage.getItem(langKey);
+      if (lang) {
+        console.log("customgrid lang change", lang);
+        this.SetLanguage(lang);
+      }
+    }
+  }, {
     key: 'new_find_card',
     value: function new_find_card(id, type, image, text) {
       return {

@@ -51,10 +51,52 @@ var TopBar = function (_React$Component) {
   function TopBar(props) {
     _classCallCheck(this, TopBar);
 
-    return _possibleConstructorReturn(this, (TopBar.__proto__ || Object.getPrototypeOf(TopBar)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (TopBar.__proto__ || Object.getPrototypeOf(TopBar)).call(this, props));
+
+    _this.ParentSetLanguageFunction = props.SetLaguageFunction;
+    _this.state = {
+      language: 'lang_marathi'
+    };
+
+    var langKey = 'config_user_langauge';
+    var lang = window.localStorage.getItem(langKey);
+    if (lang == null) {
+      switch (navigator.language) {
+        // case 'en-US':
+        // case 'en':
+        //   lang = 'lang_en_us';
+        //   break;
+        case 'hi-IN':
+        case 'hi':
+          lang = 'lang_hindi';
+          break;
+        case 'mr-IN':
+        case 'mr':
+          lang = 'lang_marathi';
+          break;
+        default:
+          lang = 'lang_marathi';
+          break;
+      }
+    }
+    window.localStorage.setItem(langKey, lang);
+    _this.setState.language = lang;
+    return _this;
   }
 
   _createClass(TopBar, [{
+    key: 'HandleChange',
+    value: function HandleChange(event) {
+      var newLang = event.target.value;
+      console.log("handle change1", newLang, event);
+      console.log("handle change2", this.state);
+      if (newLang) {
+        this.setState({ language: newLang });
+        this.ParentSetLanguageFunction(newLang);
+      }
+      console.log("handle change3", this.state);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var classes = this.props.classes;
@@ -82,7 +124,9 @@ var TopBar = function (_React$Component) {
             { className: classes.languageSelect },
             React.createElement(
               Select,
-              { value: 'english', IconComponent: WhiteDropDownIcon, disableUnderline: true, inputProps: { className: classes.languageSelectInput } },
+              { value: 'english',
+                onChange: this.HandleChange.bind(this),
+                IconComponent: WhiteDropDownIcon, disableUnderline: true, inputProps: { className: classes.languageSelectInput } },
               React.createElement(
                 MenuItem,
                 { value: 'english' },

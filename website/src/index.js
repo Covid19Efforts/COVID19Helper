@@ -21,17 +21,25 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.geoLocation = { permissionDenied: false };
+    _this.state = { language: 'lang_en_us' };
+    _this.childCustomGrid1 = React.createRef();
     return _this;
   }
 
   _createClass(App, [{
+    key: 'SetLanguage',
+    value: function SetLanguage(newLanguage) {
+      console.log("SetLanguage", newLanguage);
+      this.childCustomGrid1.current.OnLanguageChange();
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
         Fragment,
         null,
-        React.createElement(TopBar, null),
-        React.createElement(CustomGrid, { language: 'lang_en_us' })
+        React.createElement(TopBar, { SetLaguageFunction: this.SetLanguage.bind(this) }),
+        React.createElement(CustomGrid, { ref: this.childCustomGrid1, language: this.state.language })
       );
     }
   }]);
