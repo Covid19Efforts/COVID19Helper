@@ -145,12 +145,34 @@ var CustomGrid = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (CustomGrid.__proto__ || Object.getPrototypeOf(CustomGrid)).call(this, props));
 
-    var language = props.language;
+    var lang = props.language;
 
-    var lang = language;
+    // const langKey = 'config_user_langauge';
+    // let lang = window.localStorage.getItem(langKey);
+    // if( lang == null )
+    // {
+    //   switch(navigator.language)
+    //   {
+    //     // case 'en-US':
+    //     // case 'en':
+    //     //   lang = 'lang_en_us';
+    //     //   break;
+    //     case 'hi-IN':
+    //     case 'hi':
+    //       lang = 'lang_hindi';
+    //       break;
+    //     case 'mr-IN':
+    //     case 'mr':
+    //       lang = 'lang_marathi';
+    //       break;
+    //     default:
+    //       lang = 'lang_marathi';
+    //       break;
+    //   }
+    // }
 
-    if (typeof language === 'undefined') {
-      language = 'lang_marathi';
+    if (typeof lang === 'undefined') {
+      console.error("lang should be passed as parameter and must be valid", lang);
     }
 
     _this.props = props;
@@ -170,7 +192,7 @@ var CustomGrid = function (_React$Component) {
 
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
-    _this.SetLanguage(language, false);
+    _this.SetLanguage(lang, false);
     return _this;
   }
 
@@ -185,6 +207,7 @@ var CustomGrid = function (_React$Component) {
         this.state.language = newLang;
       }
       strings.setLanguage(newLang);
+      console.log("CustomGrid.js SetLanguage ", newLang, bDoSetState);
     }
   }, {
     key: 'OnLanguageChange',

@@ -134,11 +134,34 @@ function Alert(props)
 class CustomGrid extends React.Component {
   constructor(props) {
     super(props);
-    let {language} = props;
-    let lang = language;
+    let {language : lang} = props;
 
-    if (typeof language === 'undefined') {
-      language = 'lang_marathi';
+    // const langKey = 'config_user_langauge';
+    // let lang = window.localStorage.getItem(langKey);
+    // if( lang == null )
+    // {
+    //   switch(navigator.language)
+    //   {
+    //     // case 'en-US':
+    //     // case 'en':
+    //     //   lang = 'lang_en_us';
+    //     //   break;
+    //     case 'hi-IN':
+    //     case 'hi':
+    //       lang = 'lang_hindi';
+    //       break;
+    //     case 'mr-IN':
+    //     case 'mr':
+    //       lang = 'lang_marathi';
+    //       break;
+    //     default:
+    //       lang = 'lang_marathi';
+    //       break;
+    //   }
+    // }
+
+    if (typeof lang === 'undefined') {
+      console.error("lang should be passed as parameter and must be valid", lang);
     }
     
     this.props = props;
@@ -158,7 +181,7 @@ class CustomGrid extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.SetLanguage(language, false);
+    this.SetLanguage(lang, false);
   }
 
   SetLanguage(newLang, bDoSetState = true)
@@ -172,6 +195,7 @@ class CustomGrid extends React.Component {
       this.state.language = newLang;
     }
     strings.setLanguage(newLang);
+    console.log("CustomGrid.js SetLanguage ",newLang, bDoSetState)
   }
 
   OnLanguageChange()

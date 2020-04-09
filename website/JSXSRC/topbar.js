@@ -40,53 +40,62 @@ class TopBar extends React.Component {
   constructor(props) {
     super(props);
     this.ParentSetLanguageFunction = props.SetLaguageFunction;
+    let {language : lang} = props;
+
     this.state = {
-      language:'lang_marathi',
+      language:lang,
     };
 
-    const langKey = 'config_user_langauge';
-    let lang = window.localStorage.getItem(langKey);
-    if( lang == null )
-    {
-      switch(navigator.language)
-      {
-        // case 'en-US':
-        // case 'en':
-        //   lang = 'lang_en_us';
-        //   break;
-        case 'hi-IN':
-        case 'hi':
-          lang = 'lang_hindi';
-          break;
-        case 'mr-IN':
-        case 'mr':
-          lang = 'lang_marathi';
-          break;
-        default:
-          lang = 'lang_marathi';
-          break;
-      }
-    }
-    window.localStorage.setItem(langKey, lang);
-    this.setState.language = lang;
+    // const langKey = 'config_user_langauge';
+    // let lang = window.localStorage.getItem(langKey);
+    // if( lang == null )
+    // {
+    //   switch(navigator.language)
+    //   {
+    //     // case 'en-US':
+    //     // case 'en':
+    //     //   lang = 'lang_en_us';
+    //     //   break;
+    //     case 'hi-IN':
+    //     case 'hi':
+    //       lang = 'lang_hindi';
+    //       break;
+    //     case 'mr-IN':
+    //     case 'mr':
+    //       lang = 'lang_marathi';
+    //       break;
+    //     default:
+    //       lang = 'lang_marathi';
+    //       break;
+    //   }
+    // }
+    // window.localStorage.setItem(langKey, lang);
+    // this.state.language = lang;
+    //this.ParentSetLanguageFunction(lang);
+    strings.setLanguage(lang);
+    console.log("top bar constructor ", this.state.language);
   }
 
   HandleChange(event)
   {
+      const langKey = 'config_user_langauge';
       let newLang = event.target.value;
       console.log("handle change1", newLang, event);
       console.log("handle change2", this.state);
       if(newLang)
       {
+        window.localStorage.setItem(langKey, newLang);
+        strings.setLanguage(newLang);
         this.setState({language:newLang});
         this.ParentSetLanguageFunction(newLang);
+        console.log("handle change3", this.state);
       }
-      console.log("handle change3", this.state);
+      console.log("handle change4", this.state);
   }
 
   render() {
     const { classes } = this.props;
-    strings.setLanguage('lang_marathi');
+    console.log("top render constructor ", this.state.language);
     
     return (
         <AppBar position="static">
@@ -98,12 +107,12 @@ class TopBar extends React.Component {
               {strings.IDS_HELP_NEARBY}
             </Typography>
             <FormControl className={classes.languageSelect} >
-              <Select value="english" 
+              <Select value={this.state.language} 
               onChange={this.HandleChange.bind(this)}
               IconComponent={WhiteDropDownIcon } disableUnderline inputProps={{className:classes.languageSelectInput}}>
-                <MenuItem value="english">English</MenuItem>
-                <MenuItem value="marathi">Marathi</MenuItem>
-                <MenuItem value="hindi">Hindi</MenuItem>
+                <MenuItem value="lang_en_us">English</MenuItem>
+                <MenuItem value="lang_marathi">मराठी</MenuItem>
+                <MenuItem value="lang_hindi">हिन्दी</MenuItem>
               </Select>
             </FormControl>
           </Toolbar>

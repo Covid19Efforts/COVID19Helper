@@ -21,16 +21,45 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.geoLocation = { permissionDenied: false };
-    _this.state = { language: 'lang_en_us' };
+    _this.state = { language: 'lang_marathi' };
     _this.childCustomGrid1 = React.createRef();
+
+    var langKey = 'config_user_langauge';
+    var lang = window.localStorage.getItem(langKey);
+    if (lang == null) {
+      switch (navigator.language) {
+        // case 'en-US':
+        // case 'en':
+        //   lang = 'lang_en_us';
+        //   break;
+        case 'hi-IN':
+        case 'hi':
+          lang = 'lang_hindi';
+          break;
+        case 'mr-IN':
+        case 'mr':
+          lang = 'lang_marathi';
+          break;
+        default:
+          lang = 'lang_marathi';
+          break;
+      }
+    }
+
+    window.localStorage.setItem(langKey, lang);
+    _this.state.language = lang;
+
     return _this;
   }
 
   _createClass(App, [{
     key: 'SetLanguage',
     value: function SetLanguage(newLanguage) {
-      console.log("SetLanguage", newLanguage);
-      this.childCustomGrid1.current.OnLanguageChange();
+      console.log("index.js SetLanguage ", newLanguage);
+      if (this.childCustomGrid1.current) {
+        this.childCustomGrid1.current.OnLanguageChange();
+      }
+      this.setState({ language: language, newLanguage: newLanguage });
     }
   }, {
     key: 'render',
@@ -38,7 +67,7 @@ var App = function (_React$Component) {
       return React.createElement(
         Fragment,
         null,
-        React.createElement(TopBar, { SetLaguageFunction: this.SetLanguage.bind(this) }),
+        React.createElement(TopBar, { SetLaguageFunction: this.SetLanguage.bind(this), language: this.state.language }),
         React.createElement(CustomGrid, { ref: this.childCustomGrid1, language: this.state.language })
       );
     }

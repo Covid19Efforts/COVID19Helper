@@ -54,54 +54,66 @@ var TopBar = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (TopBar.__proto__ || Object.getPrototypeOf(TopBar)).call(this, props));
 
     _this.ParentSetLanguageFunction = props.SetLaguageFunction;
+    var lang = props.language;
+
+
     _this.state = {
-      language: 'lang_marathi'
+      language: lang
     };
 
-    var langKey = 'config_user_langauge';
-    var lang = window.localStorage.getItem(langKey);
-    if (lang == null) {
-      switch (navigator.language) {
-        // case 'en-US':
-        // case 'en':
-        //   lang = 'lang_en_us';
-        //   break;
-        case 'hi-IN':
-        case 'hi':
-          lang = 'lang_hindi';
-          break;
-        case 'mr-IN':
-        case 'mr':
-          lang = 'lang_marathi';
-          break;
-        default:
-          lang = 'lang_marathi';
-          break;
-      }
-    }
-    window.localStorage.setItem(langKey, lang);
-    _this.setState.language = lang;
+    // const langKey = 'config_user_langauge';
+    // let lang = window.localStorage.getItem(langKey);
+    // if( lang == null )
+    // {
+    //   switch(navigator.language)
+    //   {
+    //     // case 'en-US':
+    //     // case 'en':
+    //     //   lang = 'lang_en_us';
+    //     //   break;
+    //     case 'hi-IN':
+    //     case 'hi':
+    //       lang = 'lang_hindi';
+    //       break;
+    //     case 'mr-IN':
+    //     case 'mr':
+    //       lang = 'lang_marathi';
+    //       break;
+    //     default:
+    //       lang = 'lang_marathi';
+    //       break;
+    //   }
+    // }
+    // window.localStorage.setItem(langKey, lang);
+    // this.state.language = lang;
+    //this.ParentSetLanguageFunction(lang);
+    strings.setLanguage(lang);
+    console.log("top bar constructor ", _this.state.language);
     return _this;
   }
 
   _createClass(TopBar, [{
     key: 'HandleChange',
     value: function HandleChange(event) {
+      var langKey = 'config_user_langauge';
       var newLang = event.target.value;
       console.log("handle change1", newLang, event);
       console.log("handle change2", this.state);
       if (newLang) {
+        window.localStorage.setItem(langKey, newLang);
+        strings.setLanguage(newLang);
         this.setState({ language: newLang });
         this.ParentSetLanguageFunction(newLang);
+        console.log("handle change3", this.state);
       }
-      console.log("handle change3", this.state);
+      console.log("handle change4", this.state);
     }
   }, {
     key: 'render',
     value: function render() {
       var classes = this.props.classes;
 
-      strings.setLanguage('lang_marathi');
+      console.log("top render constructor ", this.state.language);
 
       return React.createElement(
         AppBar,
@@ -124,23 +136,23 @@ var TopBar = function (_React$Component) {
             { className: classes.languageSelect },
             React.createElement(
               Select,
-              { value: 'english',
+              { value: this.state.language,
                 onChange: this.HandleChange.bind(this),
                 IconComponent: WhiteDropDownIcon, disableUnderline: true, inputProps: { className: classes.languageSelectInput } },
               React.createElement(
                 MenuItem,
-                { value: 'english' },
+                { value: 'lang_en_us' },
                 'English'
               ),
               React.createElement(
                 MenuItem,
-                { value: 'marathi' },
-                'Marathi'
+                { value: 'lang_marathi' },
+                '\u092E\u0930\u093E\u0920\u0940'
               ),
               React.createElement(
                 MenuItem,
-                { value: 'hindi' },
-                'Hindi'
+                { value: 'lang_hindi' },
+                '\u0939\u093F\u0928\u094D\u0926\u0940'
               )
             )
           )
