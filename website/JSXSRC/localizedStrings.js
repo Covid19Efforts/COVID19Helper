@@ -45,7 +45,7 @@ const data = {
     IDS_FIND_ALL: 'सर्व शोधा',
     IDS_FIND_MEDICINES: 'औषधे शोधा',
     IDS_FIND_FOOD: 'शिजवलेले अन्न शोधा',
-    IDS_FIND_GROCERIES: 'किराणा सामान शोध',
+    IDS_FIND_GROCERIES: 'किराणा सामान शोधा',
 
     IDS_LOCATION_PROMPT_TITLE : "लोकेशनमध्ये प्रवेश करण्यास परवानगी द्या?",
     IDS_LOCATION_PROMPT_MESSAGE : "आपल्या वेबसाइटवरील परिणाम दर्शविण्यासाठी ही वेबसाइट स्थानाचा वापर करेल",
