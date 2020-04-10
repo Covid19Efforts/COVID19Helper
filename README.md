@@ -1,3 +1,7 @@
+<h1> <font color="blue" >VOLUNTEERS NEEDE</font></h1>
+<br/>
+<br/>
+
 # COVID 19 Helper
 
 COVID 19 is a web-based application to help people locate goods and services near their location.<br />
@@ -12,8 +16,7 @@ The information inside such social networks becomes lost typically after a few h
 1. Sid wants to get groceries and medicines delivered to his home. Many shops are now shut, or are no longer delivering due to shortage of man power. How does he find out which ones near his house are still delivering?
 1. Sid wants to know about various helplines catering to his area for people in need.
 
-<img src="https://raw.githubusercontent.com/lihas/COVID19Helper/master/misc/demo.gif" alt="alt text" width="300">
-![Demo](misc/demo.gif | width=450)
+<img src="https://raw.githubusercontent.com/lihas/COVID19Helper/master/misc/demo.gif" alt="demo" width="300" />
 
 ## Aim of the website
 1. A local search engine built for crises like COVID19.
@@ -68,15 +71,16 @@ npm install uuid --save
 npm install --save dynamodb-geo
 ```
 
-3. A note on directory structure <br />
-COVID19Helper\website contains all code related to the website.
-COVID19Helper\amazon-lambda contains all code related to the backend - AWS lambda.
-We make changes to files in COVID19Helper\website\JSXSRC folder. The .js files are written in JSX, and are transpiled into js files by babel (command given below). These transpiled files are kept in src folder. webpack (command given below) takes files from src folder and packages them into files in dist folder.
+3. A note on directory structure
+
+`COVID19Helper\website` contains all code related to the website. <br/>
+`COVID19Helper\amazon-lambda` contains all code related to the backend - AWS lambda. <br/>
+We make changes to files in `COVID19Helper\website\JSXSRC` folder. The .js files are written in JSX, and are transpiled into js files by babel (command given below). These transpiled files are kept in src folder. webpack (command given below) takes files from src folder and packages them into files in dist folder. <br/>
 dist folder has the files which we put on web server. <br />
 index.html is always directly edited from dist folder, as it doesn't require the transformations like the js files. <br />
 Thus, the journey of a js file would be: <br />
-COVID19Helper\website\JSXSRC -> COVID19Helper\website\src -> COVID19Helper\website\dist
-node modules are present in COVID19Helper\website\node_modules, and COVID19Helper\node_modules
+`COVID19Helper\website\JSXSRC` -> `COVID19Helper\website\src` -> `COVID19Helper\website\dist`
+node modules are present in `COVID19Helper\website\node_modules`, and `COVID19Helper\node_modules`
 
 4. Compile files. <br />
     You will need 2 powershell windows. Both with COVID19Helper\website as the working directory.
@@ -85,7 +89,7 @@ node modules are present in COVID19Helper\website\node_modules, and COVID19Helpe
     npx babel --watch JSXSRC --out-dir src --presets react-app/prod --copy-files
     ```
     This command will not end, but will keep on monitoring JSXSRC folder for any changes.
-    1. In the second powershell window run webpack command after every change you make. This will give you the required files in COVID19Helper\website\dist folder. <br /> -d switch is for development build.
+    1. In the second powershell window run webpack command after every change you make. This will give you the required files in `COVID19Helper\website\dist` folder. <br /> -d switch is for development build.
     ```bash
     npx webpack-cli --module-bind 'png=url-loader'
     npx webpack-cli -d --module-bind 'png=url-loader'
@@ -98,9 +102,9 @@ node modules are present in COVID19Helper\website\node_modules, and COVID19Helpe
     python3 -m http.server 80
     ```
     1. Install xampp (https://www.apachefriends.org/download.html) <br />
-    XAMPP server serves files from C:\xampp\htdocs by default.
+    XAMPP server serves files from `C:\xampp\htdocs` by default.
     You can either copy files from dist folder to this folder every time you make a change, or can make a directory junction link (windows)
-    so that a subfolder of C:\xampp\htdocs always points to dist folder. ,br />
+    so that a subfolder of `C:\xampp\htdocs` always points to dist folder. ,br />
     Eg. (admin command prompt)
     ```bash
     C:\xampp\htdocs>mklink /J d "C:\sahil\personal\Charity\COVID19Helper\website\dist"
