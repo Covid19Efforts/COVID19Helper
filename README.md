@@ -12,6 +12,7 @@ The information inside such social networks becomes lost typically after a few h
 1. Sid wants to get groceries and medicines delivered to his home. Many shops are now shut, or are no longer delivering due to shortage of man power. How does he find out which ones near his house are still delivering?
 1. Sid wants to know about various helplines catering to his area for people in need.
 
+<img src="https://raw.githubusercontent.com/lihas/COVID19Helper/master/misc/demo.gif" alt="alt text" width="500">
 ![Demo](misc/demo.gif | width=450)
 
 ## Aim of the website
