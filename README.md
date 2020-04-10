@@ -1,4 +1,4 @@
-#Covid 19 Helper
+# Covid 19 Helper
 
 Covid 19 is a web based application to help people locate goods and services near their location.
 COVID 19 crisis has caused many shops to close, while there are many new services which have come up to help people in need.
@@ -7,7 +7,7 @@ There is no central repository, and discoverability is extremely limited.
 The likelyhood of a person in need being able to discover any of these depends on the probability of the person being in the same whatsapp group (which are multiple) as the group in which information was shared.
 The information inside such social networks becomes lost typically after a few hours, as new messages gain attention, and older ones get buried deep in history.
 
-##Use cases
+## Use cases
 1. Sahil has volunteered to prepare food for 500 people at his home. This is not his primary vocation, and he will stop preparing food after the crisis is over. Another person, Sid wants to find places delivering such meals. Sahil advertises about the food in local WhatsApp groups, and facebook pages.
 1. Sid wants to get groceries and medicines delivered to his home. Many shops are now shut, or are no longer delivering due to shortage of man power. How does he find out which ones near his house are still delivering?
 1. Sid wants to know about various helplines catering to his area for people in need.
