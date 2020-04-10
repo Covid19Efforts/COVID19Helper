@@ -42,7 +42,7 @@ The information about these temporary services are right now shared in WhatsApp,
 1. **Coding**
 Any person with coding experience can contribute. Web technologies - javascript, etc. preferred, but since these are quite easy to develop in, a person which programming experience with other technologies would not find it difficult.
 
-#Downloading and building code.
+# Downloading and building code.
 1. Clone repo
 ```bash
 git clone https://github.com/lihas/COVID19Helper.git
