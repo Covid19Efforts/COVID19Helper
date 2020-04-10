@@ -1,4 +1,5 @@
 #Covid 19 Helper
+
 Covid 19 is a web based application to help people locate goods and services near their location.
 COVID 19 crisis has caused many shops to close, while there are many new services which have come up to help people in need.
 The information about these entities is spread via social networks like facebook, and WhatsApp.
@@ -13,7 +14,7 @@ The information inside such social networks becomes lost typically after a few h
 
 ![Demo](misc/demo.gif)
 
-## Aims of the website
+## Aim of the website
 1. A local search engine built for crises like COVID19.
 1. Open source code and implementation details so that people anywhere in the world can use it.
 
