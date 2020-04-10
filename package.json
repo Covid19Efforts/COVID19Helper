@@ -1,0 +1,25 @@
+{
+  "name": "covid19helper",
+  "version": "1.0.0",
+  "description": "Covid 19 is a web based application to help people locate goods and services near their location.\r COVID 19 crisis has caused many shops to close, while there are many new services which have come up to help people in need.\r The information about these entities is spread via social networks like facebook, and WhatsApp.\r There is no central repository, and discoverability is extremely limited.\r The likelyhood of a person in need being able to discover any of these depends on the probability of the person being in the same whatsapp group (which are multiple) as the group in which information was shared.\r The information inside such social networks becomes lost typically after a few hours, as new messages gain attention, and older ones get buried deep in history.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lihas/COVID19Helper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lihas/COVID19Helper/issues"
+  },
+  "homepage": "https://github.com/lihas/COVID19Helper#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
