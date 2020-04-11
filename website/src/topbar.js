@@ -14,6 +14,7 @@ import { data } from './localizedStrings.js';
 import LocalizedStrings from 'react-localization';
 import FormControl from '@material-ui/core/FormControl';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { CONFIG_USER_LANGUAGE_KEY } from './config.js';
 
 var strings = new LocalizedStrings(data);
 
@@ -95,7 +96,7 @@ var TopBar = function (_React$Component) {
   _createClass(TopBar, [{
     key: 'HandleChange',
     value: function HandleChange(event) {
-      var langKey = 'config_user_langauge';
+      var langKey = CONFIG_USER_LANGUAGE_KEY;
       var newLang = event.target.value;
       console.log("handle change1", newLang, event);
       console.log("handle change2", this.state);

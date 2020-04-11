@@ -16,14 +16,16 @@ var data = {
     IDS_MAP: "Map",
     IDS_KM: "km",
     IDS_HELP_NEARBY: "COVID 19 Help is around you",
-    IDS_FILTER: "Filter"
+    IDS_FILTER: "Filter",
+
+    IDS_DISTANCE: "Distance"
   },
+
   lang_hindi: {
     IDS_FIND_ALL: 'सब ढूंढें',
     IDS_FIND_MEDICINES: 'दवाइयाँ खोजें',
     IDS_FIND_FOOD: 'पका हुआ भोजन ढूंढें',
     IDS_FIND_GROCERIES: 'किराने का सामान ढूंढें',
-
     IDS_LOCATION_PROMPT_TITLE: "डिवाइस के स्थान की जानकारी की अनुमति दें?",
     IDS_LOCATION_PROMPT_MESSAGE: "वेबसाइट आपके डिवाइस के स्थान की जानकारी का इस्तेमाल उचित परिणाम दिखने के लिए करना चाहती है",
     IDS_LOCATION_PROMPT_AGREE: "सहमत",
@@ -34,16 +36,18 @@ var data = {
     IDS_GROCERIES: "किराना",
     IDS_OTHERS: "अन्य",
     IDS_MAP: "नक्शा",
-    IDS_KM: "किमी",
+    IDS_KM: "कि.मी.",
     IDS_HELP_NEARBY: "कोविड 19 मदद आपके आसपास है",
-    IDS_FILTER: "फिल्टर करें"
+    IDS_FILTER: "फिल्टर करें",
+
+    IDS_DISTANCE: "दूरी"
   },
+
   lang_marathi: {
     IDS_FIND_ALL: 'सर्व शोधा',
     IDS_FIND_MEDICINES: 'औषधे शोधा',
     IDS_FIND_FOOD: 'शिजवलेले अन्न शोधा',
     IDS_FIND_GROCERIES: 'किराणा सामान शोधा',
-
     IDS_LOCATION_PROMPT_TITLE: "लोकेशनमध्ये प्रवेश करण्यास परवानगी द्या?",
     IDS_LOCATION_PROMPT_MESSAGE: "आपल्या वेबसाइटवरील परिणाम दर्शविण्यासाठी ही वेबसाइट स्थानाचा वापर करेल",
     IDS_LOCATION_PROMPT_AGREE: "सहमत",
@@ -54,9 +58,11 @@ var data = {
     IDS_GROCERIES: "किराणा",
     IDS_OTHERS: "इतर",
     IDS_MAP: "नकाशा",
-    IDS_KM: "किमी",
+    IDS_KM: "कि.मी.",
     IDS_HELP_NEARBY: "कोविड 19 मदत आपल्या जवळ आहे",
-    IDS_FILTER: "फिल्टर करा"
+    IDS_FILTER: "फिल्टर करा",
+
+    IDS_DISTANCE: "अंतर"
   }
 };
 

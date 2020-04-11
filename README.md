@@ -105,7 +105,7 @@ node modules are present in `COVID19Helper\website\node_modules`, and `COVID19He
     1. Install xampp (https://www.apachefriends.org/download.html) <br />
     XAMPP server serves files from `C:\xampp\htdocs` by default.
     You can either copy files from dist folder to this folder every time you make a change, or can make a directory junction link (windows)
-    so that a subfolder of `C:\xampp\htdocs` always points to dist folder. ,br />
+    so that a subfolder of `C:\xampp\htdocs` always points to dist folder. <br />
     Eg. (admin command prompt)
     ```bash
     C:\xampp\htdocs>mklink /J d "C:\sahil\personal\Charity\COVID19Helper\website\dist"

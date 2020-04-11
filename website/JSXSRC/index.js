@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Button from '@material-ui/core/Button';
 import CustomGrid from './CustomGrid.js';
 import TopBar from './topbar.js';
+import {CONFIG_USER_LANGUAGE_KEY} from './config.js'
 
 class App extends React.Component
 {
@@ -13,7 +14,7 @@ class App extends React.Component
       this.state = {language:'lang_marathi'};
       this.childCustomGrid1 = React.createRef();
 
-    const langKey = 'config_user_langauge';
+    const langKey = CONFIG_USER_LANGUAGE_KEY;
     let lang = window.localStorage.getItem(langKey);
     if( lang == null )
     {

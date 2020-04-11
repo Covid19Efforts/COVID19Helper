@@ -7,13 +7,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import React, { Fragment } from 'react';
-import ReactDOM from 'react-dom';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
-import Paper from '@material-ui/core/Paper';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -49,6 +47,7 @@ import image_find from './assets/find.png';
 import image_medicine from './assets/medicine.png';
 import image_cooked_food from './assets/cookedFood.png';
 import image_grocery from './assets/grocery.png';
+import { CONFIG_USER_LANGUAGE_KEY, CONFIG_FILTER_DISTANCE_KEY_KEY, CONFIG_FILTER_DISTANCE_VALUE_KEY, CONFIG_FILTER_SLIDER_MARKS } from './config.js';
 
 var strings = new LocalizedStrings(data);
 
@@ -94,6 +93,18 @@ var styles = function styles(theme) {
     expansionPanelSummary: {
       marginTop: 0,
       marginBottom: 0
+    },
+    fliter_slider: {},
+
+    filterControls: {
+      flex: '0.5 0 auto',
+
+      display: 'flex',
+      alignItems: 'flex-end'
+    },
+
+    filterControlsText: {
+      margin: 'auto'
     }
   };
 };
@@ -147,7 +158,7 @@ var CustomGrid = function (_React$Component) {
 
     var lang = props.language;
 
-    // const langKey = 'config_user_langauge';
+    // const langKey = CONFIG_USER_LANGUAGE_KEY;
     // let lang = window.localStorage.getItem(langKey);
     // if( lang == null )
     // {
@@ -193,6 +204,36 @@ var CustomGrid = function (_React$Component) {
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.SetLanguage(lang, false);
+
+    _this.state.filter_slider_min_value_key = CONFIG_FILTER_SLIDER_MARKS[0].value;
+    _this.state.filter_slider_min_value_val = CONFIG_FILTER_SLIDER_MARKS[0].label;
+    _this.state.filter_slider_max_value_key = CONFIG_FILTER_SLIDER_MARKS[CONFIG_FILTER_SLIDER_MARKS.length - 1].value;
+    _this.state.filter_slider_max_value_val = CONFIG_FILTER_SLIDER_MARKS[CONFIG_FILTER_SLIDER_MARKS.length - 1].label;
+
+    var key = window.localStorage.getItem(CONFIG_FILTER_DISTANCE_KEY_KEY);
+    var keyVal = window.localStorage.getItem(CONFIG_FILTER_DISTANCE_VALUE_KEY);
+
+    if (!key || !keyVal) {
+      key = _this.state.filter_slider_min_value_key;
+      keyVal = _this.state.filter_slider_min_value_val;
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_KEY_KEY, key);
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_VALUE_KEY, keyVal);
+    } else if (key < _this.state.filter_slider_min_value_key || keyVal < _this.state.filter_slider_min_value_val) {
+      key = _this.state.filter_slider_min_value_key;
+      keyVal = _this.state.filter_slider_min_value_val;
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_KEY_KEY, key);
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_VALUE_KEY, keyVal);
+    } else if (key > _this.state.filter_slider_max_value_key || keyVal > _this.state.filter_slider_max_value_val) {
+      key = _this.state.filter_slider_max_value_key;
+      keyVal = _this.state.filter_slider_max_value_val;
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_KEY_KEY, key);
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_VALUE_KEY, keyVal);
+    }
+
+    _this.state.filter_slider_default_value_key = parseFloat(key);
+    _this.state.filter_slider_default_value_val = parseFloat(keyVal);
+
+    console.log("customgrid constructor ", _this.state.filter_slider_default_value_key, _this.state.filter_slider_default_value_val, _this.state.filter_slider_min_value_key, _this.state.filter_slider_min_value_val, _this.state.filter_slider_max_value_key, _this.state.filter_slider_max_value_val);
     return _this;
   }
 
@@ -212,7 +253,7 @@ var CustomGrid = function (_React$Component) {
   }, {
     key: 'OnLanguageChange',
     value: function OnLanguageChange() {
-      var langKey = 'config_user_langauge';
+      var langKey = CONFIG_USER_LANGUAGE_KEY;
       var lang = window.localStorage.getItem(langKey);
       if (lang) {
         console.log("customgrid lang change", lang);
@@ -349,7 +390,7 @@ var CustomGrid = function (_React$Component) {
   }, {
     key: 'RangeSliderCallback',
     value: function RangeSliderCallback(e, value) {
-      console.log(e, value);
+      console.log("RangeSliderCallback ", e, value);
     }
   }, {
     key: 'render_home_page',
@@ -375,6 +416,10 @@ var CustomGrid = function (_React$Component) {
       var classes = this.props.classes;
 
       var itemCtr = 0;
+
+      console.log("render home_page customgrid ", this.state.filter_slider_default_value_key, this.state.filter_slider_min_value_key, this.state.filter_slider_max_value_key, CONFIG_FILTER_SLIDER_MARKS.map(function (x) {
+        return { value: x.value, label: x.label + ' ' + strings.IDS_KM };
+      }));
 
       return React.createElement(
         Fragment,
@@ -419,7 +464,9 @@ var CustomGrid = function (_React$Component) {
         ),
         React.createElement(
           Snackbar,
-          { open: this.state.snackbarOpen, autoHideDuration: 5000, onClose: this.snackBarClose.bind(this) },
+          { open: this.state.snackbarOpen, autoHideDuration: 5000, onClose: this.snackBarClose.bind(this),
+            anchorOrigin: { vertical: 'top', horizontal: 'center' }
+          },
           React.createElement(
             Alert,
             { onClose: this.snackBarClose.bind(this), severity: this.state.snackbarSeverity },
@@ -484,7 +531,35 @@ var CustomGrid = function (_React$Component) {
                           React.createElement(
                             ExpansioPanelDetails,
                             null,
-                            React.createElement(Slider, { defaultValue: 50, step: 10, min: 10, max: 100, valueLabelDisplay: 'on', onChangeCommitted: _this4.RangeSliderCallback.bind(_this4), marks: [{ value: 10, label: '10 km' }, { value: 100, label: '100 km' }] })
+                            React.createElement(
+                              'div',
+                              { className: classes.filterControls },
+                              React.createElement(
+                                Typography,
+                                { variant: 'subtitle1', gutterBottom: true },
+                                function () {
+                                  return strings.IDS_DISTANCE + ' (' + strings.IDS_KM + ')';
+                                }()
+                              ),
+                              React.createElement(Slider, { className: classes.fliter_slider, defaultValue: _this4.state.filter_slider_default_value_key, step: null,
+                                min: _this4.state.filter_slider_min_value_key,
+                                max: _this4.state.filter_slider_max_value_key, valueLabelDisplay: 'on',
+                                onChangeCommitted: _this4.RangeSliderCallback.bind(_this4),
+
+                                valueLabelFormat: function valueLabelFormat(x) {
+                                  var lbl = _this4.state.filter_slider_default_value_key;
+                                  CONFIG_FILTER_SLIDER_MARKS.forEach(function (mark) {
+                                    if (mark.value == x) {
+                                      lbl = mark.label;
+                                      return;
+                                    }
+                                  });
+                                  return lbl;
+                                },
+
+                                marks: CONFIG_FILTER_SLIDER_MARKS
+                              })
+                            )
                           )
                         )
                       );

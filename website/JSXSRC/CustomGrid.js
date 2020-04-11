@@ -1,11 +1,9 @@
 import React, {Fragment} from 'react';
-import ReactDOM from 'react-dom';
 import { withStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
-import Paper from '@material-ui/core/Paper';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -41,6 +39,7 @@ import image_find from './assets/find.png';
 import image_medicine from './assets/medicine.png';
 import image_cooked_food from './assets/cookedFood.png';
 import image_grocery from './assets/grocery.png';
+import {CONFIG_USER_LANGUAGE_KEY,CONFIG_FILTER_DISTANCE_KEY_KEY, CONFIG_FILTER_DISTANCE_VALUE_KEY, CONFIG_FILTER_SLIDER_MARKS} from './config.js'
 
 
 const strings = new LocalizedStrings(data);
@@ -86,6 +85,20 @@ const styles = (theme) => ({
   expansionPanelSummary : {
     marginTop:0,
     marginBottom:0
+  },
+  fliter_slider :{
+    
+  },
+
+  filterControls : {
+    flex : '0.5 0 auto',
+
+    display:'flex',
+    alignItems:'flex-end'
+  },
+
+  filterControlsText : {
+    margin : 'auto'
   }
 });
 
@@ -136,7 +149,7 @@ class CustomGrid extends React.Component {
     super(props);
     let {language : lang} = props;
 
-    // const langKey = 'config_user_langauge';
+    // const langKey = CONFIG_USER_LANGUAGE_KEY;
     // let lang = window.localStorage.getItem(langKey);
     // if( lang == null )
     // {
@@ -182,6 +195,48 @@ class CustomGrid extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.SetLanguage(lang, false);
+
+    this.state.filter_slider_min_value_key = CONFIG_FILTER_SLIDER_MARKS[0].value;
+    this.state.filter_slider_min_value_val = CONFIG_FILTER_SLIDER_MARKS[0].label;
+    this.state.filter_slider_max_value_key = CONFIG_FILTER_SLIDER_MARKS[CONFIG_FILTER_SLIDER_MARKS.length - 1].value;
+    this.state.filter_slider_max_value_val = CONFIG_FILTER_SLIDER_MARKS[CONFIG_FILTER_SLIDER_MARKS.length - 1].label;
+
+    let key = window.localStorage.getItem(CONFIG_FILTER_DISTANCE_KEY_KEY);
+    let keyVal = window.localStorage.getItem(CONFIG_FILTER_DISTANCE_VALUE_KEY);
+
+    if(!key || !keyVal)
+    {
+      key     = this.state.filter_slider_min_value_key;
+      keyVal  = this.state.filter_slider_min_value_val;
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_KEY_KEY, key);
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_VALUE_KEY, keyVal);
+    }
+    else if(key < this.state.filter_slider_min_value_key || keyVal < this.state.filter_slider_min_value_val)
+    {
+      key    = this.state.filter_slider_min_value_key;
+      keyVal = this.state.filter_slider_min_value_val;
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_KEY_KEY, key);
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_VALUE_KEY, keyVal);
+    }
+    else if(key > this.state.filter_slider_max_value_key || keyVal > this.state.filter_slider_max_value_val)
+    {
+      key    = this.state.filter_slider_max_value_key;
+      keyVal = this.state.filter_slider_max_value_val;
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_KEY_KEY, key);
+      window.localStorage.setItem(CONFIG_FILTER_DISTANCE_VALUE_KEY, keyVal);
+    }
+
+    this.state.filter_slider_default_value_key = parseFloat(key);
+    this.state.filter_slider_default_value_val = parseFloat(keyVal);
+
+    console.log("customgrid constructor ",
+      this.state.filter_slider_default_value_key,
+      this.state.filter_slider_default_value_val,
+      this.state.filter_slider_min_value_key,
+      this.state.filter_slider_min_value_val,
+      this.state.filter_slider_max_value_key,
+      this.state.filter_slider_max_value_val
+    );
   }
 
   SetLanguage(newLang, bDoSetState = true)
@@ -200,7 +255,7 @@ class CustomGrid extends React.Component {
 
   OnLanguageChange()
   {
-    const langKey = 'config_user_langauge';
+    const langKey = CONFIG_USER_LANGUAGE_KEY;
     let lang = window.localStorage.getItem(langKey);
     if(lang)
     {
@@ -356,7 +411,7 @@ class CustomGrid extends React.Component {
 
   RangeSliderCallback(e, value)
   {
-    console.log(e, value);
+    console.log("RangeSliderCallback ", e, value);
   }
 
   render_home_page() {
@@ -391,6 +446,12 @@ class CustomGrid extends React.Component {
     const { classes } = this.props;
     let itemCtr = 0;
 
+    console.log("render home_page customgrid ", this.state.filter_slider_default_value_key, this.state.filter_slider_min_value_key, this.state.filter_slider_max_value_key,
+    CONFIG_FILTER_SLIDER_MARKS.map(x => {
+      return {value:x.value,label:x.label + ' ' + strings.IDS_KM};
+    })
+    );
+
     return (
       <Fragment>
       <Dialog open={this.state.locationPromptOpen} onClose={(e)=>this.locationPromptClose(e,"close").bind(this)}>
@@ -412,7 +473,9 @@ class CustomGrid extends React.Component {
       </DialogActions>
       </Dialog>
 
-      <Snackbar open={this.state.snackbarOpen} autoHideDuration={5000} onClose={this.snackBarClose.bind(this)}>
+      <Snackbar open={this.state.snackbarOpen} autoHideDuration={5000} onClose={this.snackBarClose.bind(this)}
+      anchorOrigin={{vertical:'top', horizontal:'center'}}
+      >
           <Alert onClose={this.snackBarClose.bind(this)} severity={this.state.snackbarSeverity}>
               {this.state.snackbarText}
           </Alert>
@@ -473,7 +536,30 @@ class CustomGrid extends React.Component {
                                   </Typography>
                                 </ExpansioPanelSummary>
                                 <ExpansioPanelDetails>
-                                  <Slider defaultValue={50} step={10} min={10} max={100} valueLabelDisplay="on" onChangeCommitted={this.RangeSliderCallback.bind(this)} marks={[{value:10,label:'10 km'}, {value:100,label:'100 km'}]} />
+                                  <div className={classes.filterControls} >
+                                <Typography variant="subtitle1" gutterBottom >
+                                    {(() => {return (strings.IDS_DISTANCE + ' (' + strings.IDS_KM + ')')})()}
+                                  </Typography>
+                                  <Slider className={classes.fliter_slider} defaultValue={this.state.filter_slider_default_value_key} step={null} 
+                                      min={this.state.filter_slider_min_value_key} 
+                                      max={this.state.filter_slider_max_value_key} valueLabelDisplay="on" 
+                                      onChangeCommitted={this.RangeSliderCallback.bind(this)} 
+
+                                      valueLabelFormat={(x) => {
+                                        let lbl = this.state.filter_slider_default_value_key;
+                                        CONFIG_FILTER_SLIDER_MARKS.forEach(mark => {
+                                          if(mark.value == x)
+                                          {
+                                            lbl = mark.label;
+                                            return;
+                                          }
+                                        });
+                                        return lbl;
+                                      }}
+
+                                      marks={CONFIG_FILTER_SLIDER_MARKS}
+                                  />
+                                  </div>
                                 </ExpansioPanelDetails>
                                 </ExpansioPanel>
                                 </Grid> );
