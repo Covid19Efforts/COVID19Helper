@@ -1,4 +1,4 @@
-<h1> <font color="red" >Archived</font></h1>
+<h1>ARCHIVED</h1>
 We are no longer working on this project.
 
 <h1> <font color="blue" >VOLUNTEERS NEEDED!</font></h1>
